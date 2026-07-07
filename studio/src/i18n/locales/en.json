@@ -215,10 +215,16 @@
     "saveChanges": "Save changes",
     "enableFirestoreToEdit": "Enable Firestore seed to edit.",
     "languageTabsAria": "Dataset language",
+    "datasetLabel": "Italian dataset",
+    "datasets": {
+      "NCIMP": "NCIMP",
+      "AdMIRe": "AdMIRe"
+    },
     "tabs": {
       "TR": "Turkish · editable",
       "EN": "English · reference",
-      "PT": "Portuguese · reference"
+      "PT": "Portuguese · reference",
+      "IT": "Italian · reference"
     }
   },
   "sources": {
@@ -802,6 +808,17 @@
       "P_Comp": "Single component",
       "P_WordsSyn": "Component synonyms",
       "P_Rand": "Frequency-matched random"
+    }
+  },
+  "italian": {
+    "loading": "Loading Italian MWE datasets…",
+    "loadFailed": "Failed to load Italian dataset: {{message}}",
+    "readOnlyBadge": "read-only IT · {{dataset}}",
+    "probes": "Probe forms",
+    "summary": {
+      "mwes": "MWEs:",
+      "scored": "scored:",
+      "contexts": "contexts:"
     }
   },
   "public": {

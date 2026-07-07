@@ -215,10 +215,16 @@
     "saveChanges": "Değişiklikleri kaydet",
     "enableFirestoreToEdit": "Düzenlemek için Firestore seed'i etkinleştirin.",
     "languageTabsAria": "Veri seti dili",
+    "datasetLabel": "İtalyanca veri seti",
+    "datasets": {
+      "NCIMP": "NCIMP",
+      "AdMIRe": "AdMIRe"
+    },
     "tabs": {
       "TR": "Türkçe · düzenlenebilir",
       "EN": "İngilizce · referans",
-      "PT": "Portekizce · referans"
+      "PT": "Portekizce · referans",
+      "IT": "İtalyanca · referans"
     }
   },
   "sources": {
@@ -803,6 +809,17 @@
       "P_Rand": "Frekans eşli rastgele"
     },
     "firestorePublication": "Firebase salt-okunur yayını"
+  },
+  "italian": {
+    "loading": "İtalyanca MWE veri setleri yükleniyor…",
+    "loadFailed": "İtalyanca veri seti yüklenemedi: {{message}}",
+    "readOnlyBadge": "salt okunur IT · {{dataset}}",
+    "probes": "Prob formları",
+    "summary": {
+      "mwes": "MWE:",
+      "scored": "skorlu:",
+      "contexts": "bağlam:"
+    }
   },
   "public": {
     "header": {

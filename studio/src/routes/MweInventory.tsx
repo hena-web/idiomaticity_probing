@@ -18,6 +18,7 @@ import type { MweRecord } from "@/data/schema";
 import { useDomainLabels } from "@/i18n/hooks";
 import { COMP_CLASS_VARIANT, WORKFLOW_ORDER } from "@/lib/domain-labels";
 import { ReferenceInventory } from "@/routes/ReferenceInventory";
+import { ItalianInventory, type ItalianDatasetId } from "@/routes/ItalianInventory";
 import { useQueryClient } from "@tanstack/react-query";
 import {
     flexRender,
@@ -47,10 +48,13 @@ export function MweInventory() {
   const queryClient = useQueryClient();
   const [searchParams, setSearchParams] = useSearchParams();
   const requestedLanguage = searchParams.get("lang");
-  const language: "TR" | "EN" | "PT" =
-    requestedLanguage === "EN" || requestedLanguage === "PT"
+  const language: "TR" | "EN" | "PT" | "IT" =
+    requestedLanguage === "EN" || requestedLanguage === "PT" || requestedLanguage === "IT"
       ? requestedLanguage
       : "TR";
+  const requestedDataset = searchParams.get("dataset");
+  const italianDataset: ItalianDatasetId =
+    requestedDataset === "AdMIRe" ? "AdMIRe" : "NCIMP";
   const { data, isLoading, isError, error } = useResearchSnapshot();
   const [search, setSearch] = useState("");
   const [classFilter, setClassFilter] = useState("all");
@@ -146,12 +150,17 @@ export function MweInventory() {
     getSortedRowModel: getSortedRowModel(),
   });
 
-  const setLanguage = (next: "TR" | "EN" | "PT") => {
+  const setLanguage = (next: "TR" | "EN" | "PT" | "IT") => {
     setSelected(null);
     setSearchParams(next === "TR" ? {} : { lang: next });
   };
 
-  if (language !== "TR") {
+  const setItalianDataset = (next: ItalianDatasetId) => {
+    setSelected(null);
+    setSearchParams({ lang: "IT", dataset: next });
+  };
+
+  if (language === "EN" || language === "PT") {
     return (
       <div className="space-y-6">
         <div>
@@ -162,6 +171,22 @@ export function MweInventory() {
         </div>
         <LanguageTabs language={language} onChange={setLanguage} />
         <ReferenceInventory language={language} />
+      </div>
+    );
+  }
+
+  if (language === "IT") {
+    return (
+      <div className="space-y-6">
+        <div>
+          <h1 className="text-2xl font-semibold">{t("mwes.title")}</h1>
+          <p className="text-sm text-[hsl(var(--muted-foreground))]">
+            {t("mwes.subtitle")}
+          </p>
+        </div>
+        <LanguageTabs language={language} onChange={setLanguage} />
+        <DatasetSelect value={italianDataset} onChange={setItalianDataset} />
+        <ItalianInventory dataset={italianDataset} />
       </div>
     );
   }
@@ -356,8 +381,8 @@ function LanguageTabs({
   language,
   onChange,
 }: {
-  language: "TR" | "EN" | "PT";
-  onChange: (language: "TR" | "EN" | "PT") => void;
+  language: "TR" | "EN" | "PT" | "IT";
+  onChange: (language: "TR" | "EN" | "PT" | "IT") => void;
 }) {
   const { t } = useTranslation();
   return (
@@ -366,7 +391,7 @@ function LanguageTabs({
       role="tablist"
       aria-label={t("mwes.languageTabsAria")}
     >
-      {(["TR", "EN", "PT"] as const).map((code) => (
+      {(["TR", "EN", "PT", "IT"] as const).map((code) => (
         <Button
           key={code}
           role="tab"
@@ -377,6 +402,30 @@ function LanguageTabs({
           {t(`mwes.tabs.${code}`)}
         </Button>
       ))}
+    </div>
+  );
+}
+
+function DatasetSelect({
+  value,
+  onChange,
+}: {
+  value: ItalianDatasetId;
+  onChange: (dataset: ItalianDatasetId) => void;
+}) {
+  const { t } = useTranslation();
+  return (
+    <div className="max-w-xs space-y-1">
+      <label className="text-xs font-medium text-[hsl(var(--muted-foreground))]">
+        {t("mwes.datasetLabel")}
+      </label>
+      <Select
+        value={value}
+        onChange={(event) => onChange(event.target.value as ItalianDatasetId)}
+      >
+        <option value="NCIMP">{t("mwes.datasets.NCIMP")}</option>
+        <option value="AdMIRe">{t("mwes.datasets.AdMIRe")}</option>
+      </Select>
     </div>
   );
 }
