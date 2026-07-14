@@ -734,7 +734,7 @@ function IndicatorsTable({
         header: t("results.indicatorsTable.columns.context"),
       },
       {
-        accessorKey: "representationLevel",
+        accessorKey: "representation",
         header: t("results.indicatorsTable.columns.representation"),
         cell: ({ getValue }) => (
           <span className="text-xs">
