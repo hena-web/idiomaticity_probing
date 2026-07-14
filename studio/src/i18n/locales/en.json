@@ -216,6 +216,8 @@
     "enableFirestoreToEdit": "Enable Firestore seed to edit.",
     "languageTabsAria": "Dataset language",
     "datasetLabel": "Italian dataset",
+    "editMode": "Edit",
+    "viewMode": "View",
     "datasets": {
       "NCIMP": "NCIMP",
       "AdMIRe": "AdMIRe"
@@ -483,6 +485,9 @@
       "title": "P_Comp component probes",
       "description": "Approve the modifier/head component probes, then check the generated P_Comp sentence variants.",
       "noVariants": "No P_Comp variants yet."
+    },
+    "italian": {
+      "localDraft": "local editable draft"
     }
   },
   "release": {
@@ -815,6 +820,7 @@
     "loadFailed": "Failed to load Italian dataset: {{message}}",
     "readOnlyBadge": "read-only IT · {{dataset}}",
     "probes": "Probe forms",
+    "components": "Dataset words",
     "summary": {
       "mwes": "MWEs:",
       "scored": "scored:",

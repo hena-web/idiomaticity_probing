@@ -18,7 +18,7 @@ import { useQuery } from "@tanstack/react-query";
 
 export type ItalianDatasetId = "NCIMP" | "AdMIRe";
 
-type ItalianContext = {
+export type ItalianContext = {
   id: string;
   slot: string;
   family: "naturalistic" | "neutral";
@@ -28,7 +28,7 @@ type ItalianContext = {
   sourceColumn: string;
 };
 
-type ItalianItem = {
+export type ItalianItem = {
   id: string;
   dataset: ItalianDatasetId;
   language: "IT";
@@ -42,7 +42,7 @@ type ItalianItem = {
   contexts: ItalianContext[];
 };
 
-type ItalianDataset = {
+export type ItalianDataset = {
   id: ItalianDatasetId;
   label: string;
   summary: {
@@ -54,7 +54,7 @@ type ItalianDataset = {
   items: ItalianItem[];
 };
 
-type ItalianArtifact = {
+export type ItalianArtifact = {
   schemaVersion: number;
   generatedAt: string;
   readOnly: true;
@@ -68,7 +68,7 @@ type ItalianArtifact = {
   datasets: Record<ItalianDatasetId, ItalianDataset>;
 };
 
-async function loadItalianDatasets(): Promise<ItalianArtifact> {
+export async function loadItalianDatasets(): Promise<ItalianArtifact> {
   const response = await fetch("/references/italian_mwe_datasets.json", {
     cache: "no-cache",
   });
@@ -78,7 +78,13 @@ async function loadItalianDatasets(): Promise<ItalianArtifact> {
   return response.json();
 }
 
-export function ItalianInventory({ dataset }: { dataset: ItalianDatasetId }) {
+export function ItalianInventory({
+  dataset,
+  editMode = false,
+}: {
+  dataset: ItalianDatasetId;
+  editMode?: boolean;
+}) {
   const { t } = useTranslation();
   const { COMP_CLASS_VARIANT } = useDomainLabels();
   const query = useQuery({
@@ -201,11 +207,6 @@ export function ItalianInventory({ dataset }: { dataset: ItalianDatasetId }) {
                   >
                     <td className="p-3">
                       <p className="font-medium">{item.canonicalForm}</p>
-                      <p className="text-xs text-[hsl(var(--muted-foreground))]">
-                        {[item.components.word1, item.components.wordX, item.components.word2]
-                          .filter(Boolean)
-                          .join(" + ") || "-"}
-                      </p>
                     </td>
                     <td className="p-3">
                       {item.goldClass ? (
@@ -230,7 +231,7 @@ export function ItalianInventory({ dataset }: { dataset: ItalianDatasetId }) {
         </Card>
         <div className="lg:sticky lg:top-6 lg:self-start">
           {selected ? (
-            <ItalianDetail item={selected} />
+            <ItalianDetail item={selected} editMode={editMode} />
           ) : (
             <Card>
               <CardHeader>
@@ -245,7 +246,13 @@ export function ItalianInventory({ dataset }: { dataset: ItalianDatasetId }) {
   );
 }
 
-function ItalianDetail({ item }: { item: ItalianItem }) {
+function ItalianDetail({
+  item,
+  editMode,
+}: {
+  item: ItalianItem;
+  editMode: boolean;
+}) {
   const { t } = useTranslation();
   const { compClassLabel, COMP_CLASS_VARIANT } = useDomainLabels();
   return (
@@ -275,31 +282,17 @@ function ItalianDetail({ item }: { item: ItalianItem }) {
           </div>
         ) : null}
 
-        <div className="rounded-md border border-[hsl(var(--border))] p-3">
-          <p className="mb-2 text-xs font-medium text-[hsl(var(--muted-foreground))]">
-            {t("italian.probes")}
-          </p>
-          <div className="space-y-2 text-sm">
-            <ProbeValues label="P_Syn" values={item.probes.P_Syn} />
-            <ProbeValues label="P_WordsSyn" values={item.probes.P_WordsSyn} />
-          </div>
-        </div>
-
         {item.contexts.map((context) => (
           <div
             key={context.id}
             className="space-y-2 rounded-md border border-[hsl(var(--border))] p-3"
           >
             <div className="flex items-center justify-between gap-2">
-              <Badge
-                variant={
-                  context.family === "naturalistic" ? "success" : "outline"
-                }
-              >
-                {context.slot}
+              <Badge variant="success">
+                {context.sourceColumn}
               </Badge>
               <span className="text-xs text-[hsl(var(--muted-foreground))]">
-                {context.sourceColumn}
+                {context.family}
               </span>
             </div>
             <p className="text-sm leading-6">
@@ -311,23 +304,100 @@ function ItalianDetail({ item }: { item: ItalianItem }) {
             </p>
           </div>
         ))}
+
+        <div className="rounded-md border border-[hsl(var(--border))] p-3">
+          <div className="space-y-2 text-sm">
+            <ProbeValues
+              label="pwordsyn"
+              values={item.probes.P_WordsSyn}
+              editable={editMode}
+            />
+            <ProbeValues
+              label="psyn"
+              values={item.probes.P_Syn}
+              editable={editMode}
+            />
+          </div>
+        </div>
+
+        <div className="rounded-md border border-[hsl(var(--border))] p-3">
+          <p className="mb-2 text-xs font-medium text-[hsl(var(--muted-foreground))]">
+            {t("italian.components")}
+          </p>
+          <div className="grid gap-2 text-sm sm:grid-cols-3">
+            <ComponentValue
+              label={item.dataset === "NCIMP" ? "word_1" : "word 1"}
+              value={item.components.word1}
+              editable={editMode}
+            />
+            <ComponentValue
+              label={item.dataset === "NCIMP" ? "word_x" : "word x"}
+              value={item.components.wordX}
+              editable={editMode}
+            />
+            <ComponentValue
+              label={item.dataset === "NCIMP" ? "word_2" : "word 2"}
+              value={item.components.word2}
+              editable={editMode}
+            />
+          </div>
+        </div>
       </CardContent>
     </Card>
   );
 }
 
-function ProbeValues({ label, values }: { label: string; values: string[] }) {
+function ComponentValue({
+  label,
+  value,
+  editable,
+}: {
+  label: string;
+  value: string;
+  editable: boolean;
+}) {
+  return (
+    <div className="rounded bg-[hsl(var(--muted))]/50 p-2">
+      <p className="text-[11px] font-medium text-[hsl(var(--muted-foreground))]">
+        {label}
+      </p>
+      {editable ? (
+        <Input className="mt-1 h-8 text-sm" defaultValue={value} />
+      ) : (
+        <p className="mt-1 text-sm">{value || "-"}</p>
+      )}
+    </div>
+  );
+}
+
+function ProbeValues({
+  label,
+  values,
+  editable = false,
+}: {
+  label: string;
+  values: string[];
+  editable?: boolean;
+}) {
   return (
     <div className="flex flex-wrap items-center gap-2">
       <Badge variant="outline">{label}</Badge>
       {values.length > 0 ? (
         values.map((value) => (
-          <span
-            key={value}
-            className="rounded bg-[hsl(var(--muted))] px-2 py-1 text-xs"
-          >
-            {value}
-          </span>
+          editable ? (
+            <Input
+              key={value}
+              className="h-8 max-w-xs text-sm"
+              defaultValue={value}
+            />
+          ) : (
+            <span
+              key={value}
+              className="rounded bg-[hsl(var(--muted))] px-2 py-1 text-xs"
+            >
+              {value}
+            </span>
+          )
         ))
       ) : (
         <span className="text-xs text-[hsl(var(--muted-foreground))]">-</span>

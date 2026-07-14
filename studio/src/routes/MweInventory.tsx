@@ -31,7 +31,7 @@ import {
 import { ArrowUpDown, X } from "lucide-react";
 import { useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 
 function ClassBadge({ value }: { value: string | null | undefined }) {
   if (!value)
@@ -45,6 +45,7 @@ export function MweInventory() {
   const { t } = useTranslation();
   const { compClassLabel, workflowLabel } = useDomainLabels();
   const { profile } = useAuth();
+  const navigate = useNavigate();
   const queryClient = useQueryClient();
   const [searchParams, setSearchParams] = useSearchParams();
   const requestedLanguage = searchParams.get("lang");
@@ -185,7 +186,17 @@ export function MweInventory() {
           </p>
         </div>
         <LanguageTabs language={language} onChange={setLanguage} />
-        <DatasetSelect value={italianDataset} onChange={setItalianDataset} />
+        <div className="flex items-end justify-between gap-3">
+          <DatasetSelect value={italianDataset} onChange={setItalianDataset} />
+          <Button
+            variant="outline"
+            onClick={() =>
+              navigate(`/studio/examples?lang=IT&dataset=${italianDataset}`)
+            }
+          >
+            {t("mwes.editMode")}
+          </Button>
+        </div>
         <ItalianInventory dataset={italianDataset} />
       </div>
     );

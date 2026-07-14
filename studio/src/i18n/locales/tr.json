@@ -216,6 +216,8 @@
     "enableFirestoreToEdit": "Düzenlemek için Firestore seed'i etkinleştirin.",
     "languageTabsAria": "Veri seti dili",
     "datasetLabel": "İtalyanca veri seti",
+    "editMode": "Edit",
+    "viewMode": "View",
     "datasets": {
       "NCIMP": "NCIMP",
       "AdMIRe": "AdMIRe"
@@ -483,6 +485,9 @@
       "title": "P_Comp bileşen probları",
       "description": "Modifier/head bileşen problarını onayla, sonra üretilen P_Comp cümle varyantlarını kontrol et.",
       "noVariants": "Henüz P_Comp varyantı yok."
+    },
+    "italian": {
+      "localDraft": "yerel düzenlenebilir taslak"
     }
   },
   "release": {
@@ -815,6 +820,7 @@
     "loadFailed": "İtalyanca veri seti yüklenemedi: {{message}}",
     "readOnlyBadge": "salt okunur IT · {{dataset}}",
     "probes": "Prob formları",
+    "components": "Dataset kelimeleri",
     "summary": {
       "mwes": "MWE:",
       "scored": "skorlu:",

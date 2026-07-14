@@ -15,6 +15,13 @@ import { useQueryClient } from "@tanstack/react-query";
 import { Info } from "lucide-react";
 import { useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { useSearchParams } from "react-router-dom";
+import {
+  loadItalianDatasets,
+  type ItalianDatasetId,
+  type ItalianItem,
+} from "@/routes/ItalianInventory";
+import { useQuery } from "@tanstack/react-query";
 
 function isCorpusSourced(origin: string) {
   return origin === "internet_open_license";
@@ -64,6 +71,16 @@ const PROBE_KIND_ORDER = ["P_Syn", "P_Comp", "P_WordsSyn", "P_Rand"] as const;
 type ProbeKind = (typeof PROBE_KIND_ORDER)[number];
 
 export function CurationStudio() {
+  const [searchParams] = useSearchParams();
+  if (searchParams.get("lang") === "IT") {
+    const dataset: ItalianDatasetId =
+      searchParams.get("dataset") === "AdMIRe" ? "AdMIRe" : "NCIMP";
+    return <ItalianCurationStudio dataset={dataset} />;
+  }
+  return <TurkishCurationStudio />;
+}
+
+function TurkishCurationStudio() {
   const { t } = useTranslation();
   const { profile } = useAuth();
   const queryClient = useQueryClient();
@@ -229,6 +246,298 @@ export function CurationStudio() {
         </Card>
       </div>
     </div>
+  );
+}
+
+function italianStorageKey(dataset: ItalianDatasetId) {
+  return `italian-curation-${dataset}-v1`;
+}
+
+function ItalianCurationStudio({ dataset }: { dataset: ItalianDatasetId }) {
+  const { t } = useTranslation();
+  const query = useQuery({
+    queryKey: ["italian-mwe-datasets"],
+    queryFn: loadItalianDatasets,
+    staleTime: Number.POSITIVE_INFINITY,
+  });
+  const [search, setSearch] = useState("");
+  const [selectedId, setSelectedId] = useState<string | null>(null);
+  const [itemsOverride, setItemsOverride] = useState<Record<string, ItalianItem>>(
+    () => {
+      try {
+        return JSON.parse(
+          window.localStorage.getItem(italianStorageKey(dataset)) ?? "{}",
+        );
+      } catch {
+        return {};
+      }
+    },
+  );
+
+  const items = useMemo(() => {
+    const base = query.data?.datasets[dataset].items ?? [];
+    return base.map((item) => itemsOverride[item.id] ?? item);
+  }, [dataset, itemsOverride, query.data]);
+  const filtered = useMemo(() => {
+    const needle = search.trim().toLocaleLowerCase();
+    return items.filter(
+      (item) =>
+        !needle ||
+        `${item.id} ${item.canonicalForm}`.toLocaleLowerCase().includes(needle),
+    );
+  }, [items, search]);
+  const selected = items.find((item) => item.id === selectedId) ?? null;
+
+  function saveItem(item: ItalianItem) {
+    const next = { ...itemsOverride, [item.id]: item };
+    setItemsOverride(next);
+    window.localStorage.setItem(italianStorageKey(dataset), JSON.stringify(next));
+  }
+
+  if (query.isLoading) {
+    return <FullPageSpinner label={t("italian.loading")} />;
+  }
+  if (query.isError || !query.data) {
+    return (
+      <p className="text-sm text-[hsl(var(--destructive))]">
+        {t("italian.loadFailed", {
+          message:
+            query.error instanceof Error
+              ? query.error.message
+              : t("common.unknownError"),
+        })}
+      </p>
+    );
+  }
+
+  return (
+    <div className="space-y-6">
+      <div>
+        <h1 className="text-2xl font-semibold">{t("curation.title")}</h1>
+        <p className="text-sm text-[hsl(var(--muted-foreground))]">
+          Italian · {dataset} · {t("curation.italian.localDraft")}
+        </p>
+      </div>
+
+      <Card className="overflow-hidden">
+        <div className="border-b border-[hsl(var(--border))] p-2">
+          <Input
+            placeholder={t("curation.searchPlaceholder")}
+            value={search}
+            onChange={(event) => setSearch(event.target.value)}
+          />
+        </div>
+        <div className="max-h-[72vh] overflow-auto">
+          {filtered.map((item) => {
+            const active = selected?.id === item.id;
+            return (
+              <div
+                key={item.id}
+                className={`border-b border-[hsl(var(--border))] last:border-0 ${
+                  active ? "bg-[hsl(var(--accent))]" : ""
+                }`}
+              >
+                <button
+                  type="button"
+                  onClick={() => setSelectedId(active ? null : item.id)}
+                  className="w-full px-3 py-2 text-left text-sm hover:bg-[hsl(var(--accent))]"
+                >
+                  <span className="block truncate font-medium">
+                    {item.canonicalForm}
+                  </span>
+                  <span className="mt-1 flex flex-wrap gap-1">
+                    <Badge variant="success">{dataset}</Badge>
+                    <Badge variant="outline">{item.contexts.length} contexts</Badge>
+                    {itemsOverride[item.id] ? (
+                      <Badge variant="warning">{t("common.saved")}</Badge>
+                    ) : null}
+                  </span>
+                </button>
+                {active ? (
+                  <div className="px-3 pb-3">
+                    <ItalianExpressionEditor item={item} onSave={saveItem} />
+                  </div>
+                ) : null}
+              </div>
+            );
+          })}
+        </div>
+      </Card>
+    </div>
+  );
+}
+
+function ItalianExpressionEditor({
+  item,
+  onSave,
+}: {
+  item: ItalianItem;
+  onSave: (item: ItalianItem) => void;
+}) {
+  const { t } = useTranslation();
+  const [draft, setDraft] = useState(item);
+  return (
+    <div className="space-y-2">
+      <details
+        className="rounded-md border border-[hsl(var(--border))] bg-[hsl(var(--background))]"
+        open
+      >
+        <summary className="cursor-pointer px-3 py-2 text-sm font-medium">
+          {t("curation.edit.examplesTitle")}
+        </summary>
+        <div className="space-y-2 border-t border-[hsl(var(--border))] p-3">
+          {draft.contexts.map((context, index) => (
+            <div
+              key={context.id}
+              className="rounded-md border border-[hsl(var(--border))] bg-[hsl(var(--background))] p-2"
+            >
+              <div className="mb-2 flex items-center justify-between gap-2">
+                <Badge variant="success">{context.sourceColumn}</Badge>
+                <span className="text-xs text-[hsl(var(--muted-foreground))]">
+                  {context.family}
+                </span>
+              </div>
+              <textarea
+                className="min-h-20 w-full rounded-md border border-[hsl(var(--input))] bg-transparent p-2 text-sm outline-none focus-visible:ring-2 focus-visible:ring-[hsl(var(--ring))]"
+                value={context.sentence}
+                onChange={(event) => {
+                  const contexts = [...draft.contexts];
+                  contexts[index] = {
+                    ...context,
+                    sentence: event.target.value,
+                  };
+                  setDraft({ ...draft, contexts });
+                }}
+              />
+              <Input
+                className="mt-2 h-8 text-sm"
+                value={context.targetSurface}
+                onChange={(event) => {
+                  const contexts = [...draft.contexts];
+                  contexts[index] = {
+                    ...context,
+                    targetSurface: event.target.value,
+                  };
+                  setDraft({ ...draft, contexts });
+                }}
+              />
+            </div>
+          ))}
+        </div>
+      </details>
+
+      <details
+        className="rounded-md border border-[hsl(var(--border))] bg-[hsl(var(--background))]"
+        open
+      >
+        <summary className="cursor-pointer px-3 py-2 text-sm font-medium">
+          pwordsyn / psyn
+        </summary>
+        <div className="space-y-2 border-t border-[hsl(var(--border))] p-3">
+          <LabeledInput
+            label="pwordsyn"
+            value={draft.probes.P_WordsSyn.join("; ")}
+            onChange={(value) =>
+              setDraft({
+                ...draft,
+                probes: {
+                  ...draft.probes,
+                  P_WordsSyn: splitDraftValues(value),
+                },
+              })
+            }
+          />
+          <LabeledInput
+            label="psyn"
+            value={draft.probes.P_Syn.join("; ")}
+            onChange={(value) =>
+              setDraft({
+                ...draft,
+                probes: {
+                  ...draft.probes,
+                  P_Syn: splitDraftValues(value),
+                },
+              })
+            }
+          />
+        </div>
+      </details>
+
+      <details
+        className="rounded-md border border-[hsl(var(--border))] bg-[hsl(var(--background))]"
+        open
+      >
+        <summary className="cursor-pointer px-3 py-2 text-sm font-medium">
+          {t("italian.components")}
+        </summary>
+        <div className="grid gap-2 border-t border-[hsl(var(--border))] p-3 sm:grid-cols-3">
+          <LabeledInput
+            label={draft.dataset === "NCIMP" ? "word_1" : "word 1"}
+            value={draft.components.word1}
+            onChange={(value) =>
+              setDraft({
+                ...draft,
+                components: { ...draft.components, word1: value },
+              })
+            }
+          />
+          <LabeledInput
+            label={draft.dataset === "NCIMP" ? "word_x" : "word x"}
+            value={draft.components.wordX}
+            onChange={(value) =>
+              setDraft({
+                ...draft,
+                components: { ...draft.components, wordX: value },
+              })
+            }
+          />
+          <LabeledInput
+            label={draft.dataset === "NCIMP" ? "word_2" : "word 2"}
+            value={draft.components.word2}
+            onChange={(value) =>
+              setDraft({
+                ...draft,
+                components: { ...draft.components, word2: value },
+              })
+            }
+          />
+        </div>
+      </details>
+
+      <Button size="sm" onClick={() => onSave(draft)}>
+        {t("common.save")}
+      </Button>
+    </div>
+  );
+}
+
+function splitDraftValues(value: string) {
+  return value
+    .split(/[;|]/u)
+    .map((part) => part.trim())
+    .filter(Boolean);
+}
+
+function LabeledInput({
+  label,
+  value,
+  onChange,
+}: {
+  label: string;
+  value: string;
+  onChange: (value: string) => void;
+}) {
+  return (
+    <label className="block space-y-1 text-xs">
+      <span className="font-medium text-[hsl(var(--muted-foreground))]">
+        {label}
+      </span>
+      <Input
+        className="h-9 text-sm"
+        value={value}
+        onChange={(event) => onChange(event.target.value)}
+      />
+    </label>
   );
 }
 
