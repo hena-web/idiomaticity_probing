@@ -1,0 +1,722 @@
+[
+  {
+    "nc": "grey matter",
+    "lang": "EN",
+    "context": "naturalistic",
+    "comp_class": "I",
+    "comp_score": 0.95,
+    "sent_id": "S1",
+    "original": {
+      "sentence": "These youngsters use their grey matter when the presentation is right",
+      "span": [
+        4,
+        6
+      ]
+    },
+    "probes": {
+      "P_Syn": [
+        {
+          "sentence": "These youngsters use their brain when the presentation is right",
+          "span": [
+            4,
+            5
+          ]
+        }
+      ],
+      "P_Comp": [
+        {
+          "sentence": "These youngsters use their matter when the presentation is right",
+          "span": [
+            4,
+            5
+          ]
+        }
+      ],
+      "P_WordsSyn": [
+        {
+          "sentence": "These youngsters use their silvery material when the presentation is right",
+          "span": [
+            4,
+            6
+          ]
+        }
+      ],
+      "P_Rand": [
+        {
+          "sentence": "These youngsters use their battlefront serviceman when the presentation is right",
+          "span": [
+            4,
+            6
+          ]
+        },
+        {
+          "sentence": "These youngsters use their supermarket city when the presentation is right",
+          "span": [
+            4,
+            6
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "nc": "grey matter",
+    "lang": "EN",
+    "context": "neutral",
+    "comp_class": "I",
+    "comp_score": 0.95,
+    "sent_id": null,
+    "original": {
+      "sentence": "This is a grey matter",
+      "span": [
+        3,
+        5
+      ]
+    },
+    "probes": {
+      "P_Syn": [
+        {
+          "sentence": "This is a brain",
+          "span": [
+            3,
+            4
+          ]
+        }
+      ],
+      "P_Comp": [
+        {
+          "sentence": "This is a matter",
+          "span": [
+            3,
+            4
+          ]
+        }
+      ],
+      "P_WordsSyn": [
+        {
+          "sentence": "This is a silvery material",
+          "span": [
+            3,
+            5
+          ]
+        }
+      ],
+      "P_Rand": [
+        {
+          "sentence": "This is a battlefront serviceman",
+          "span": [
+            3,
+            5
+          ]
+        },
+        {
+          "sentence": "This is a supermarket city",
+          "span": [
+            3,
+            5
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "nc": "eager beaver",
+    "lang": "EN",
+    "context": "naturalistic",
+    "comp_class": "I",
+    "comp_score": 0.8,
+    "sent_id": "S1",
+    "original": {
+      "sentence": "Eric was being an eager beaver and left work late",
+      "span": [
+        4,
+        6
+      ]
+    },
+    "probes": {
+      "P_Syn": [
+        {
+          "sentence": "Eric was being an hard worker and left work late",
+          "span": [
+            4,
+            6
+          ]
+        }
+      ],
+      "P_Comp": [
+        {
+          "sentence": "Eric was being an beaver and left work late",
+          "span": [
+            4,
+            5
+          ]
+        }
+      ],
+      "P_WordsSyn": [
+        {
+          "sentence": "Eric was being an restless rodent and left work late",
+          "span": [
+            4,
+            6
+          ]
+        }
+      ],
+      "P_Rand": [
+        {
+          "sentence": "Eric was being an battlefront serviceman and left work late",
+          "span": [
+            4,
+            6
+          ]
+        },
+        {
+          "sentence": "Eric was being an petrol station and left work late",
+          "span": [
+            4,
+            6
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "nc": "eager beaver",
+    "lang": "EN",
+    "context": "neutral",
+    "comp_class": "I",
+    "comp_score": 0.8,
+    "sent_id": null,
+    "original": {
+      "sentence": "This is a eager beaver",
+      "span": [
+        3,
+        5
+      ]
+    },
+    "probes": {
+      "P_Syn": [
+        {
+          "sentence": "This is a hard worker",
+          "span": [
+            3,
+            5
+          ]
+        }
+      ],
+      "P_Comp": [
+        {
+          "sentence": "This is a beaver",
+          "span": [
+            3,
+            4
+          ]
+        }
+      ],
+      "P_WordsSyn": [
+        {
+          "sentence": "This is a restless rodent",
+          "span": [
+            3,
+            5
+          ]
+        }
+      ],
+      "P_Rand": [
+        {
+          "sentence": "This is a battlefront serviceman",
+          "span": [
+            3,
+            5
+          ]
+        },
+        {
+          "sentence": "This is a petrol station",
+          "span": [
+            3,
+            5
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "nc": "dutch courage",
+    "lang": "EN",
+    "context": "naturalistic",
+    "comp_class": "PC",
+    "comp_score": 2.34,
+    "sent_id": "S1",
+    "original": {
+      "sentence": "We had to go down to the pub to get some dutch courage",
+      "span": [
+        11,
+        13
+      ]
+    },
+    "probes": {
+      "P_Syn": [
+        {
+          "sentence": "We had to go down to the pub to get some alcoholic courage",
+          "span": [
+            11,
+            13
+          ]
+        }
+      ],
+      "P_Comp": [
+        {
+          "sentence": "We had to go down to the pub to get some courage",
+          "span": [
+            11,
+            12
+          ]
+        }
+      ],
+      "P_WordsSyn": [
+        {
+          "sentence": "We had to go down to the pub to get some hollander bravery",
+          "span": [
+            11,
+            13
+          ]
+        }
+      ],
+      "P_Rand": [
+        {
+          "sentence": "We had to go down to the pub to get some wedding cake",
+          "span": [
+            11,
+            13
+          ]
+        },
+        {
+          "sentence": "We had to go down to the pub to get some morning paper",
+          "span": [
+            11,
+            13
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "nc": "dutch courage",
+    "lang": "EN",
+    "context": "neutral",
+    "comp_class": "PC",
+    "comp_score": 2.34,
+    "sent_id": null,
+    "original": {
+      "sentence": "This is a dutch courage",
+      "span": [
+        3,
+        5
+      ]
+    },
+    "probes": {
+      "P_Syn": [
+        {
+          "sentence": "This is a alcoholic courage",
+          "span": [
+            3,
+            5
+          ]
+        }
+      ],
+      "P_Comp": [
+        {
+          "sentence": "This is a courage",
+          "span": [
+            3,
+            4
+          ]
+        }
+      ],
+      "P_WordsSyn": [
+        {
+          "sentence": "This is a hollander bravery",
+          "span": [
+            3,
+            5
+          ]
+        }
+      ],
+      "P_Rand": [
+        {
+          "sentence": "This is a wedding cake",
+          "span": [
+            3,
+            5
+          ]
+        },
+        {
+          "sentence": "This is a morning paper",
+          "span": [
+            3,
+            5
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "nc": "eternal rest",
+    "lang": "EN",
+    "context": "naturalistic",
+    "comp_class": "PC",
+    "comp_score": 2.4,
+    "sent_id": "S1",
+    "original": {
+      "sentence": "They have been called home to their eternal rest and we are left behind",
+      "span": [
+        7,
+        9
+      ]
+    },
+    "probes": {
+      "P_Syn": [
+        {
+          "sentence": "They have been called home to their death and we are left behind",
+          "span": [
+            7,
+            8
+          ]
+        }
+      ],
+      "P_Comp": [
+        {
+          "sentence": "They have been called home to their rest and we are left behind",
+          "span": [
+            7,
+            8
+          ]
+        }
+      ],
+      "P_WordsSyn": [
+        {
+          "sentence": "They have been called home to their permanent break and we are left behind",
+          "span": [
+            7,
+            9
+          ]
+        }
+      ],
+      "P_Rand": [
+        {
+          "sentence": "They have been called home to their weekly meeting and we are left behind",
+          "span": [
+            7,
+            9
+          ]
+        },
+        {
+          "sentence": "They have been called home to their garden chair and we are left behind",
+          "span": [
+            7,
+            9
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "nc": "eternal rest",
+    "lang": "EN",
+    "context": "neutral",
+    "comp_class": "PC",
+    "comp_score": 2.4,
+    "sent_id": null,
+    "original": {
+      "sentence": "This is a eternal rest",
+      "span": [
+        3,
+        5
+      ]
+    },
+    "probes": {
+      "P_Syn": [
+        {
+          "sentence": "This is a death",
+          "span": [
+            3,
+            4
+          ]
+        }
+      ],
+      "P_Comp": [
+        {
+          "sentence": "This is a rest",
+          "span": [
+            3,
+            4
+          ]
+        }
+      ],
+      "P_WordsSyn": [
+        {
+          "sentence": "This is a permanent break",
+          "span": [
+            3,
+            5
+          ]
+        }
+      ],
+      "P_Rand": [
+        {
+          "sentence": "This is a weekly meeting",
+          "span": [
+            3,
+            5
+          ]
+        },
+        {
+          "sentence": "This is a garden chair",
+          "span": [
+            3,
+            5
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "nc": "economic aid",
+    "lang": "EN",
+    "context": "naturalistic",
+    "comp_class": "C",
+    "comp_score": 4.13,
+    "sent_id": "S1",
+    "original": {
+      "sentence": "The USSR was soon giving Cuba economic aid and military support",
+      "span": [
+        6,
+        8
+      ]
+    },
+    "probes": {
+      "P_Syn": [
+        {
+          "sentence": "The USSR was soon giving Cuba financial assistance and military support",
+          "span": [
+            6,
+            8
+          ]
+        }
+      ],
+      "P_Comp": [
+        {
+          "sentence": "The USSR was soon giving Cuba aid and military support",
+          "span": [
+            6,
+            7
+          ]
+        }
+      ],
+      "P_WordsSyn": [
+        {
+          "sentence": "The USSR was soon giving Cuba budgetary assistance and military support",
+          "span": [
+            6,
+            8
+          ]
+        }
+      ],
+      "P_Rand": [
+        {
+          "sentence": "The USSR was soon giving Cuba random walk and military support",
+          "span": [
+            6,
+            8
+          ]
+        },
+        {
+          "sentence": "The USSR was soon giving Cuba kitchen table and military support",
+          "span": [
+            6,
+            8
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "nc": "economic aid",
+    "lang": "EN",
+    "context": "neutral",
+    "comp_class": "C",
+    "comp_score": 4.13,
+    "sent_id": null,
+    "original": {
+      "sentence": "This is a economic aid",
+      "span": [
+        3,
+        5
+      ]
+    },
+    "probes": {
+      "P_Syn": [
+        {
+          "sentence": "This is a financial assistance",
+          "span": [
+            3,
+            5
+          ]
+        }
+      ],
+      "P_Comp": [
+        {
+          "sentence": "This is a aid",
+          "span": [
+            3,
+            4
+          ]
+        }
+      ],
+      "P_WordsSyn": [
+        {
+          "sentence": "This is a budgetary assistance",
+          "span": [
+            3,
+            5
+          ]
+        }
+      ],
+      "P_Rand": [
+        {
+          "sentence": "This is a random walk",
+          "span": [
+            3,
+            5
+          ]
+        },
+        {
+          "sentence": "This is a kitchen table",
+          "span": [
+            3,
+            5
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "nc": "research lab",
+    "lang": "EN",
+    "context": "naturalistic",
+    "comp_class": "C",
+    "comp_score": 4.0,
+    "sent_id": "S1",
+    "original": {
+      "sentence": "Being part of a research lab provides exciting fieldwork experiences",
+      "span": [
+        4,
+        6
+      ]
+    },
+    "probes": {
+      "P_Syn": [
+        {
+          "sentence": "Being part of a research facility provides exciting fieldwork experiences",
+          "span": [
+            4,
+            6
+          ]
+        }
+      ],
+      "P_Comp": [
+        {
+          "sentence": "Being part of a lab provides exciting fieldwork experiences",
+          "span": [
+            4,
+            5
+          ]
+        }
+      ],
+      "P_WordsSyn": [
+        {
+          "sentence": "Being part of a investigation workplace provides exciting fieldwork experiences",
+          "span": [
+            4,
+            6
+          ]
+        }
+      ],
+      "P_Rand": [
+        {
+          "sentence": "Being part of a garden party provides exciting fieldwork experiences",
+          "span": [
+            4,
+            6
+          ]
+        },
+        {
+          "sentence": "Being part of a summer holiday provides exciting fieldwork experiences",
+          "span": [
+            4,
+            6
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "nc": "research lab",
+    "lang": "EN",
+    "context": "neutral",
+    "comp_class": "C",
+    "comp_score": 4.0,
+    "sent_id": null,
+    "original": {
+      "sentence": "This is a research lab",
+      "span": [
+        3,
+        5
+      ]
+    },
+    "probes": {
+      "P_Syn": [
+        {
+          "sentence": "This is a research facility",
+          "span": [
+            3,
+            5
+          ]
+        }
+      ],
+      "P_Comp": [
+        {
+          "sentence": "This is a lab",
+          "span": [
+            3,
+            4
+          ]
+        }
+      ],
+      "P_WordsSyn": [
+        {
+          "sentence": "This is a investigation workplace",
+          "span": [
+            3,
+            5
+          ]
+        }
+      ],
+      "P_Rand": [
+        {
+          "sentence": "This is a garden party",
+          "span": [
+            3,
+            5
+          ]
+        },
+        {
+          "sentence": "This is a summer holiday",
+          "span": [
+            3,
+            5
+          ]
+        }
+      ]
+    }
+  }
+]

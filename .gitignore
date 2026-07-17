@@ -151,13 +151,13 @@ Thumbs.db
 *.run.xml
 
 # Project-specific
-data/
+# Keep generated/downloaded data ignored by default, but version the small
+# reproducible sample fixture required by the test suite.
+data/*
 !data/sample/
 !data/sample/**
 # Keep downloaded NCIMP source files ignored, but version the Turkish extension
 # and its reproducibility audit.
-!data/
-data/*
 !data/ncimp/
 data/ncimp/*
 !data/ncimp/DATASET_AUDIT_EN_PT_TR.md
